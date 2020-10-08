@@ -1,5 +1,7 @@
 """
 This module could be used to automate modification of Excel sheets
+specifically is useful when you are dealing with excel files containing several sheets that are similar
+and all sheets are needed to updated similarly
 
 Working functions:
     - updating values of specific column in all sheet
@@ -11,7 +13,6 @@ import openpyxl as xl
 
 def modify_excel_values(name: "Excel file name", col: int, correction: int):
     """ Modifies all values of a specific column in Excel sheets
-
 
     Parameters:
         name -- Excel file name
