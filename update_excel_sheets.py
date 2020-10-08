@@ -1,11 +1,9 @@
 """
 This module could be used to automate modification of Excel sheets
-TODO:
-complete functions:
-    - updating column titles of all the sheets
 
 Working functions:
     - updating values of specific column in all sheet
+    - updating column titles of all the sheets
 
 """
 import openpyxl as xl
@@ -14,7 +12,8 @@ import openpyxl as xl
 def modify_excel_values(name: "Excel file name", col: int, correction: int):
     """ Modifies all values of a specific column in Excel sheets
 
-    Arguments:
+
+    Parameters:
         name -- Excel file name
         col -- col number to be corrected
         correction -- a correction value between 0 to 1
@@ -35,7 +34,18 @@ def modify_excel_values(name: "Excel file name", col: int, correction: int):
 def modify_excel_sheet_col_titles(name: "Excel file name", new_titles: list):
     """ Modifies titles of columns in all of the sheets
 
-    Arguments:
+    Parameters:
         name -- Excel file name
         new_titles -- list of new titles
     """
+    print(f"*** Excel file: {name} ***")
+    wb = xl.load_workbook(name)
+    for sheet in wb.worksheets:
+        print(f"working on {sheet}")
+        for col in range(1, len(new_titles)+1):
+            current_title = sheet.cell(1, col).value
+            updated_title = new_titles[col-1]
+            sheet.cell(1, col).value = updated_title
+            print(f"{current_title} --> {updated_title}")
+
+    wb.save(name)
