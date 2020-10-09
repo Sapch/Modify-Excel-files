@@ -1,18 +1,20 @@
 """
-This module could be used to automate modification of Excel sheets
-specifically is useful when you are dealing with excel files containing several sheets that are similar
-and all sheets are needed to updated similarly
+This module could be used to automate creation and modification of Excel sheets
+specifically is useful when you are dealing with
 
 Working functions:
     - updating values of specific column in all sheet
     - updating column titles of all the sheets
+    - Creating Excel sheet/s with its column headers
 
 """
 import openpyxl as xl
 
 
-def modify_excel_values(name: "Excel file name", col: int, correction: int):
+def update_col_values(name: "Excel file name", col: int, correction: int):
     """ Modifies all values of a specific column in Excel sheets
+    Usage: updating excel file containing several sheets that are similar
+    and all sheets are needed to updated similarly
 
     Parameters:
         name -- Excel file name
@@ -32,21 +34,44 @@ def modify_excel_values(name: "Excel file name", col: int, correction: int):
     wb.save(name)
 
 
-def modify_excel_sheet_col_titles(name: "Excel file name", new_titles: list):
-    """ Modifies titles of columns in all of the sheets
+def update_col_headers(name: "Excel file name", new_headings: list):
+    """ Modifies headers of columns in all of the sheets
+    Usage: updating excel file containing several sheets that are similar
+    and all sheets are needed to updated similarly
 
     Parameters:
         name -- Excel file name
-        new_titles -- list of new titles
+        new_headings -- list of new titles
     """
     print(f"*** Excel file: {name} ***")
     wb = xl.load_workbook(name)
     for sheet in wb.worksheets:
         print(f"working on {sheet}")
-        for col in range(1, len(new_titles)+1):
+        for col in range(1, len(new_headings)+1):
             current_title = sheet.cell(1, col).value
-            updated_title = new_titles[col-1]
+            updated_title = new_headings[col-1]
             sheet.cell(1, col).value = updated_title
             print(f"{current_title} --> {updated_title}")
 
     wb.save(name)
+
+
+def creat_excel_sheet(name: "Excel file name", col_headings: list, sheet_names: list):
+    """Creates Excel sheet/s with its column headers
+    Usage: creating several sheets within an Excel file with similar column headings
+
+    name -- name of the excel file to be created
+    col_headings -- Excel sheets column headers
+    sheet_name -- names of the sheets
+    """
+    wb = xl.Workbook()
+    for sheet in sheet_names:
+        wb.create_sheet(sheet, 0)
+        sheet = wb[sheet]
+
+        x = 1  # first row in the sheet
+        for header in col_headings:
+            sheet.cell(1, x).value = header
+            x += 1
+
+    wb.save(name+".xlsx")
