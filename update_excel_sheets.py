@@ -69,9 +69,9 @@ def creat_excel_sheet(name: "Excel file name", col_headings: list, sheet_names: 
         wb.create_sheet(sheet, 0)
         sheet = wb[sheet]
 
-        x = 1  # first row in the sheet
+        col = 1  # first col in the sheet
         for header in col_headings:
-            sheet.cell(1, x).value = header
-            x += 1
+            sheet.cell(1, col).value = header
+            col += 1
 
     wb.save(name+".xlsx")
