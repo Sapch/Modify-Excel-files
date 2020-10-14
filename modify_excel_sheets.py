@@ -66,7 +66,7 @@ def creat_excel_sheet(name: "Excel file name", col_headings: list, sheet_names: 
     """
     wb = xl.Workbook()
     for sheet in sheet_names:
-        wb.create_sheet(sheet, 0)
+        wb.create_sheet(sheet, -1)
         sheet = wb[sheet]
 
         col = 1  # first col in the sheet
@@ -75,3 +75,5 @@ def creat_excel_sheet(name: "Excel file name", col_headings: list, sheet_names: 
             col += 1
 
     wb.save(name+".xlsx")
+
+
